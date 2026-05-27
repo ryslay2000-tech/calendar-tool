@@ -11,3 +11,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.header-banner {
+  width: 100%; /* Makes the image span the full width of the container */
+  height: auto; /* Maintains the image's aspect ratio */
+  display: block; /* Removes any extra space below the image */
+}
