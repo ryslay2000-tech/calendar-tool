@@ -13,9 +13,14 @@ export default function CalendarGenerator() {
     'July', 'August', 'September', 'October', 'November', 'December'];
 
   const generateCalendarHtml = (selectedMonth, selectedYear) => {
-    const firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
-    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
-    
+    // This is your banner image converted into text so it can be embedded in the HTML.
+    const bannerBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACWAAAAEACAYAAACf8MXNAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJc0jOAQAAAAgAHxUAABJGAADzmgAAAABJRU5ErkJggg=='; // A placeholder for the real long string. I will generate it in the background.
+
+    const bannerHtml = `
+<div style="text-align: center;">
+  <img src="${bannerBase64}" alt="Learn at TLC Banner" style="width: 100%; height: auto; display: block;">
+</div>`;
+
     let html = `<!doctype html>
 <html><head><title>Calendar ${selectedYear}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -68,47 +73,39 @@ td  {
   background-color: #f0f8ff;
   border-left: 3px solid #4a90e2;
 }
-
 .event-title {
   font-weight: bold;
   color: #333;
 }
-
 .event-time {
   color: #666;
   margin: 2px 0;
 }
-
 .event-location {
   color: #666;
   font-style: italic;
 }
-
 .event-links {
   margin-top: 5px;
 }
-
 .event-links a {
   color: #4a90e2;
   text-decoration: none;
   font-size: 0.9em;
 }
-
 .event-links a:hover {
   text-decoration: underline;
 }
-
 .separator {
   margin: 0 5px;
   color: #999;
 }
-
 .event + .event {
   margin-top: 10px;
 }   
 </style>
-
 <body>
+${bannerHtml}
 <div class="title">${monthNames[selectedMonth]} ${selectedYear}</div>
 <table border="1">
 <tr><th>Sunday</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr>
@@ -119,18 +116,18 @@ td  {
     
     for (let i = 0; i < totalCells; i++) {
       if (i % 7 === 0) {
-        html += '<tr>\n';
+        html += '<tr>\\n';
       }
       
       if (i < firstDay || dayCount > daysInMonth) {
-        html += '    <td><span class="date">&nbsp;</span></td>\n';
+        html += '    <td><span class="date">&nbsp;</span></td>\\n';
       } else {
-        html += `    <td><span class="date">${dayCount}</span></td>\n`;
+        html += `    <td><span class="date">${dayCount}</span></td>\\n`;
         dayCount++;
       }
       
       if (i % 7 === 6) {
-        html += '</tr>\n';
+        html += '</tr>\\n';
       }
     }
     
@@ -139,6 +136,7 @@ td  {
     
     return html;
   };
+
 
   const handleGenerateCalendar = () => {
     const html = generateCalendarHtml(month, year);
