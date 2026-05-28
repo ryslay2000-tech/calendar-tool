@@ -12,7 +12,7 @@ export default function CalendarGenerator() {
   const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'];
 
-  const generateCalendarHtml = (selectedMonth, selectedYear) => {
+const generateCalendarHtml = (selectedMonth, selectedYear) => {
     // This is your banner image converted into text so it can be embedded in the HTML.
     const bannerBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACWAAAAEACAYAAACf8MXNAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJc0jOAQAAAAgAHxUAABJGAADzmgAAAABJRU5ErkJggg=='; // A placeholder for the real long string. I will generate it in the background.
 
@@ -21,6 +21,11 @@ export default function CalendarGenerator() {
   <img src="${bannerBase64}" alt="Learn at TLC Banner" style="width: 100%; height: auto; display: block;">
 </div>`;
 
+    // These are the lines that were missing
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
+    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+
     let html = `<!doctype html>
 <html><head><title>Calendar ${selectedYear}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -28,81 +33,20 @@ export default function CalendarGenerator() {
 <meta name="generator" content="Calendar Generator">
 </head>
 <style type="text/css">
-/* Styling for the title (Month and Year) of the calendar */
-div.title {
-    font: x-large Verdana, Arial, Helvetica, sans-serif;
-    text-align: center;
-    height: 40px;
-    background-color: white;
-    color: black;
-    }
-/* Styling for the overall table */
-table {
-    font: 100% Verdana, Arial, Helvetica, sans-serif;
-    table-layout: fixed;
-    border-collapse: collapse;
-    width: 100%;
-    }
-/* Styling for the column headers (days of the week) */
-th {
-    padding: 0 0.5em;
-    text-align: center;
-    background-color:gray;
-    color:white;
-    }
-/* Styling for the individual cells (days) */
-td  {     
-    font-size: medium;
-    padding: 0.25em 0.25em;   
-    width: 14%; 
-    height: 80px;
-    text-align: left;
-    vertical-align: top;
-    }
-/* Styling for the date numbers */
-.date  {     
-    font-size: large;
-    padding: 0.25em 0.25em;   
-    text-align: left;
-    vertical-align: top;
-    }
-.event {
-  font-size: 0.85em;
-  margin-top: 5px;
-  padding: 5px;
-  background-color: #f0f8ff;
-  border-left: 3px solid #4a90e2;
-}
-.event-title {
-  font-weight: bold;
-  color: #333;
-}
-.event-time {
-  color: #666;
-  margin: 2px 0;
-}
-.event-location {
-  color: #666;
-  font-style: italic;
-}
-.event-links {
-  margin-top: 5px;
-}
-.event-links a {
-  color: #4a90e2;
-  text-decoration: none;
-  font-size: 0.9em;
-}
-.event-links a:hover {
-  text-decoration: underline;
-}
-.separator {
-  margin: 0 5px;
-  color: #999;
-}
-.event + .event {
-  margin-top: 10px;
-}   
+div.title { font: x-large Verdana, Arial, Helvetica, sans-serif; text-align: center; height: 40px; background-color: white; color: black; }
+table { font: 100% Verdana, Arial, Helvetica, sans-serif; table-layout: fixed; border-collapse: collapse; width: 100%; }
+th { padding: 0 0.5em; text-align: center; background-color:gray; color:white; }
+td { font-size: medium; padding: 0.25em 0.25em; width: 14%; height: 80px; text-align: left; vertical-align: top; }
+.date { font-size: large; padding: 0.25em 0.25em; text-align: left; vertical-align: top; }
+.event { font-size: 0.85em; margin-top: 5px; padding: 5px; background-color: #f0f8ff; border-left: 3px solid #4a90e2; }
+.event-title { font-weight: bold; color: #333; }
+.event-time { color: #666; margin: 2px 0; }
+.event-location { color: #666; font-style: italic; }
+.event-links { margin-top: 5px; }
+.event-links a { color: #4a90e2; text-decoration: none; font-size: 0.9em; }
+.event-links a:hover { text-decoration: underline; }
+.separator { margin: 0 5px; color: #999; }
+.event + .event { margin-top: 10px; }
 </style>
 <body>
 ${bannerHtml}
@@ -113,30 +57,21 @@ ${bannerHtml}
 
     let dayCount = 1;
     let totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
-    
-    for (let i = 0; i < totalCells; i++) {
-      if (i % 7 === 0) {
-        html += '<tr>\\n';
-      }
-      
-      if (i < firstDay || dayCount > daysInMonth) {
-        html += '    <td><span class="date">&nbsp;</span></td>\\n';
-      } else {
-        html += `    <td><span class="date">${dayCount}</span></td>\\n`;
-        dayCount++;
-      }
-      
-      if (i % 7 === 6) {
-        html += '</tr>\\n';
-      }
-    }
-    
-    html += `</table><br>
-</body></html>`;
-    
-    return html;
-  };
 
+    for (let i = 0; i < totalCells; i++) {
+        if (i % 7 === 0) { html += '<tr>\\n'; }
+        if (i < firstDay || dayCount > daysInMonth) {
+            html += '    <td><span class="date">&nbsp;</span></td>\\n';
+        } else {
+            html += `    <td><span class="date">${dayCount}</span></td>\\n`;
+            dayCount++;
+        }
+        if (i % 7 === 6) { html += '</tr>\\n'; }
+    }
+
+    html += `</table><br></body></html>`;
+    return html;
+};
 
   const handleGenerateCalendar = () => {
     const html = generateCalendarHtml(month, year);
