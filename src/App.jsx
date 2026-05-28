@@ -58,7 +58,6 @@ ${bannerHtml}
     let totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
 
     for (let i = 0; i < totalCells; i++) {
-        // Corrected from '\\n' to '\n'
         if (i % 7 === 0) { html += '<tr>\n'; }
         if (i < firstDay || dayCount > daysInMonth) {
             html += '    <td><span class="date">&nbsp;</span></td>\n';
