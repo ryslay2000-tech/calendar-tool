@@ -13,14 +13,10 @@ export default function CalendarGenerator() {
     'July', 'August', 'September', 'October', 'November', 'December'];
 
 const generateCalendarHtml = (selectedMonth, selectedYear) => {
-    // This now contains the FULL, correct Base64 string for your image.
-    const bannerBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACWAAAAEACAYAAACf8MXNAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJc0jOAQAAAAgAHxUAABJGAADzmgAAAABJRU5ErkJggg==';
-
-    const bannerHtml = `
+   const bannerHtml = `
 <div style="text-align: center;">
-  <img src="${bannerBase64}" alt="Learn at TLC Banner" style="width: 100%; height: auto; display: block;">
+  <img src="https://ryslay2000-tech.github.io/calendar-tool/LearnTLC_.png" alt="Learn at TLC Banner" style="width: 100%; height: auto; display: block;">
 </div>`;
-
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
     const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
